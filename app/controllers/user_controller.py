@@ -53,14 +53,6 @@ class UserController:
         except Exception as error:
             return {"status": "error", "message": "Erro ao tentar procurar pelo registro", "response": str(error) }
         
-    def __verify_email(self, email: str) -> bool:
-        response = self.select_user_by_email(email)
-        return response["status"] == "success"
-    
-    def __verify_connection_db(self) -> bool:
-        response = self.select_all_users()
-        return response["status"] == "error"
-
     def update_user_by_id(self, id: int, user_info: dict) -> dict:
         id = int(id)
         name = user_info["name"]
@@ -79,4 +71,27 @@ class UserController:
         
         except Exception as error:
             return {"status": "error", "message": "Erro ao tentar procurar pelo registro", "response": str(error) }
+        
+    def delete_user_by_id(self, id: int) -> dict:
+        try:
+            repository = UserRepository()
+            response = repository.delete_by_id(id)
+
+            if response:
+                return {"status": "success", "message": "Registro deletado com sucesso"}
+            
+            return {"status": "succes", "message": "Nenhum registro com esse ID foi encontrado"}
+        
+        except Exception as error:
+            return {"status": "error", "message": "Erro ao tentar excluir registro!", "response": error}
+
+
+    def __verify_email(self, email: str) -> bool:
+        response = self.select_user_by_email(email)
+        return response["status"] == "success"
+    
+    def __verify_connection_db(self) -> bool:
+        response = self.select_all_users()
+        return response["status"] == "error"
+
 

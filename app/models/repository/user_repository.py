@@ -57,3 +57,14 @@ class UserRepository:
                 session.refresh(user)
 
         return user
+    
+    def delete_by_id(self, id: int) -> bool:
+        with db.session() as session:
+            user = session.query(User).filter_by(id=id).first()
+
+            if user:
+                session.delete(user)
+                session.commit()
+                return True
+            
+            return False

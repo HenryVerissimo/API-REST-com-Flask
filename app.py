@@ -33,6 +33,15 @@ def update_user(id: int):
     
     return jsonify(response), 400
 
+@app.route("/users/<int:id>", methods=["DELETE"])
+def delete_user(id: int):
+    response = UserController().delete_user_by_id(id)
+
+    if response["status"] == "success":
+        return jsonify(response), 200
+    
+    return jsonify(response), 400
+
 if __name__ == "__main__":
 
     app.run(debug=True)
