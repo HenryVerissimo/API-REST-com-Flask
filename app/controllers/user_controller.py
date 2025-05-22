@@ -37,9 +37,7 @@ class UserController:
             return {"status": "success", "message": "Nenhum registro encontrado", "response": None}
         
         except Exception as error:
-            return {"status": "error", "message": "Erro ao tentar encontrar registros", "response": str(error)}
-
-        
+            return {"status": "error", "message": "Erro ao tentar encontrar registros", "response": str(error)} 
 
     def select_user_by_email(self, email: str) -> dict:
         try:
@@ -63,5 +61,22 @@ class UserController:
         response = self.select_all_users()
         return response["status"] == "error"
 
+    def update_user_by_id(self, id: int, user_info: dict) -> dict:
+        id = int(id)
+        name = user_info["name"]
+        email = user_info["email"]
+        password = user_info["password"]
 
+        try:
+            repository = UserRepository()
+            user = repository.update_by_id(id, name, email, password)
+
+            if user:
+                user_info = user_schema.dump(user)
+                return {"status": "success", "message": "Registro atualizado com sucesso!", "response": user_info}
+            
+            return {"status": "success", "message": "Nenhum registro encontrado", "response": None}
+        
+        except Exception as error:
+            return {"status": "error", "message": "Erro ao tentar procurar pelo registro", "response": str(error) }
 

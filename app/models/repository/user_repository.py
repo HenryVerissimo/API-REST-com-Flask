@@ -14,7 +14,6 @@ class UserRepository:
     def select_all(self) -> list:
         with db.session() as session:
             users = session.query(User).all()
-            session.commit()
             for user in users:
                 session.refresh(user)
         
@@ -24,16 +23,37 @@ class UserRepository:
     def select_quant(self, quantity: int) -> list:
         with db.session() as session:
             users = session.query(User).count(quantity)
-            session.commit()
             session.refresh(users)
 
         return users
 
     def select_by_email(self, email: str) -> User | None:
-
         with db.session() as session:
             user = session.query(User).filter_by(email=email).first()
             if user: 
+                session.refresh(user)
+
+        return user
+    
+    def select_by_id(self, id: int) -> User | None:
+        with db.session() as session:
+            user = session.query(User).filter_by(id=id).first()
+            if user:
+                session.refresh(user)
+
+        return user
+    
+    def update_by_id(self, id: int, name: str, email: str, password: str) -> User:
+        with db.session() as session:
+            user = session.query(User).filter_by(id=id).first()
+
+            if user:
+                user.name = name
+                user.email = email
+                user.password = password
+
+                session.add(user)
+                session.commit()
                 session.refresh(user)
 
         return user
