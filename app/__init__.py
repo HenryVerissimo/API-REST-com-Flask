@@ -16,3 +16,12 @@ app.config["SECRET_KEY"] = f"{secret_key}"
 ma.init_app(app)
 db.init_app(app)
 migrate.init_app(app, db)
+
+@app.shell_context_processor
+def create_shell_context():
+    return dict(
+        app=app,
+        db=db,
+        ma=ma,
+        migrate=migrate
+    )
