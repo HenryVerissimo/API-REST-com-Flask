@@ -42,6 +42,15 @@ def delete_user(id: int):
     
     return jsonify(response), 400
 
+@app.route("/users/<int:id>", methods=["GET"])
+def select_user(id):
+    response = UserController().select_user_by_id(id)
+
+    if response["status"] == "succeess":
+        return jsonify(response), 200
+    
+    return jsonify(response), 400
+
 if __name__ == "__main__":
 
     app.run(debug=True)
