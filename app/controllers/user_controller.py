@@ -60,9 +60,9 @@ class UserController:
 
             if user:
                 user_info = user_schema.dump(user)
-                return {"status": "succes", "message": "registro encontrado com sucesso", "response": user_info}
+                return {"status": "success", "message": "registro encontrado com sucesso", "response": user_info}
             
-            return {"staus": "succes", "message": "Nenhum registro foi encontrado", "response": None}
+            return {"status": "succes", "message": "Nenhum registro foi encontrado", "response": None}
         
         except Exception as error:
             return {"status": "error", "message": "Erro ao tentar procurar pelo registro", "respone": error}
@@ -94,7 +94,7 @@ class UserController:
             if response:
                 return {"status": "success", "message": "Registro deletado com sucesso"}
             
-            return {"status": "succes", "message": "Nenhum registro com esse ID foi encontrado"}
+            return {"status": "success", "message": "Nenhum registro com esse ID foi encontrado"}
         
         except Exception as error:
             return {"status": "error", "message": "Erro ao tentar excluir registro!", "response": error}
@@ -102,7 +102,7 @@ class UserController:
 
     def __verify_email(self, email: str) -> bool:
         response = self.select_user_by_email(email)
-        return response["status"] == "success"
+        return response["status"] == "success" and response["response"] != None
     
     def __verify_connection_db(self) -> bool:
         response = self.select_all_users()

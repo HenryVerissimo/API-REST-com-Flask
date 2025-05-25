@@ -46,7 +46,7 @@ def delete_user(id: int):
 def select_user(id):
     response = UserController().select_user_by_id(id)
 
-    if response["status"] == "succeess":
+    if response["status"] == "success":
         return jsonify(response), 200
     
     return jsonify(response), 400
