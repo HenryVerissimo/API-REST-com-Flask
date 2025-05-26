@@ -28,7 +28,7 @@ def update_user(id: int):
     user_info = request.get_json()
     response = UserController().update_user_by_id(id, user_info)
 
-    if response["status"] == "succes":
+    if response["status"] == "success":
         return jsonify(response), 200
     
     return jsonify(response), 400
