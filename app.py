@@ -3,12 +3,16 @@ from flask import request, jsonify
 
 
 from app.controllers.user_controller import UserController
+from app.models.mongodb import log_info
+
 
 @app.route("/users", methods=["POST"])
 def create_user():
+
+    log_info(__name__, "Requisição para inserir um novo usuário")
     user_info = request.get_json()
     response = UserController().create_user(user_info)
-
+    
     if response["status"] == "success":
         return jsonify(response), 201
     
@@ -16,8 +20,10 @@ def create_user():
 
 @app.route("/users", methods=["GET"])
 def select_users():
-    response = UserController().select_all_users()
 
+    log_info(__name__, "Requisição para visualizar todos os usuários")
+    response = UserController().select_all_users()
+    
     if response["status"] == "success":
         return jsonify(response), 200
     
@@ -25,9 +31,11 @@ def select_users():
 
 @app.route("/users/<int:id>", methods=["PUT"])
 def update_user(id: int):
+
+    log_info(__name__, "Requisição para atualizar um usuário")
     user_info = request.get_json()
     response = UserController().update_user_by_id(id, user_info)
-
+    
     if response["status"] == "success":
         return jsonify(response), 200
     
@@ -35,8 +43,10 @@ def update_user(id: int):
 
 @app.route("/users/<int:id>", methods=["DELETE"])
 def delete_user(id: int):
-    response = UserController().delete_user_by_id(id)
 
+    log_info(__name__, "Requisição para deletar um usuário")
+    response = UserController().delete_user_by_id(id)
+    
     if response["status"] == "success":
         return jsonify(response), 200
     
@@ -44,6 +54,8 @@ def delete_user(id: int):
 
 @app.route("/users/<int:id>", methods=["GET"])
 def select_user(id):
+
+    log_info(__name__, "Requisição para visualizar um usuário")
     response = UserController().select_user_by_id(id)
 
     if response["status"] == "success":

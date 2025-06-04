@@ -1,5 +1,5 @@
-from app.models.repository.user_repository import UserRepository
-from app.models.entities import user_schema, users_schema
+from app.models.mysql.repository.user_repository import UserRepository
+from app.models.mysql.entities.entities import user_schema, users_schema
 
 from flask import jsonify
 

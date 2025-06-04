@@ -1,4 +1,4 @@
-from app.models.entities import db, User
+from app.models.mysql.entities.entities import db, User
 
 class UserRepository:
     def insert(self, name: str, email: str, password: str) -> User | None:

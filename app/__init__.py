@@ -1,5 +1,5 @@
 from flask import Flask
-from .models.entities import db, ma, migrate
+from .models.mysql.entities.entities import db, ma, migrate
 
 from os import getenv
 from dotenv import load_dotenv
