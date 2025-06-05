@@ -1,1 +1,1 @@
-from .mongo_log import log_info
+from .mongo_log import log_info, log_error

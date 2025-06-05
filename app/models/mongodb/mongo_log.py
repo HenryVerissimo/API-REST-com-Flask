@@ -29,8 +29,22 @@ class MongoLog:
         async with self.__collection as con:
             await con.insert_one(info)
 
+    async def log_error(self, file_name: str, message: str) -> None:
+        info = {
+            "level": "ERROR",
+            "message": message,
+            "file_name": file_name,
+            "date": datetime.utcnow()
+        }
+
+        async with self.__collection as con:
+            await con.insert_one(info)
+
 
 mongo_collection = MongoCollection(log_db_uri, log_db, log_collection)
 
 def log_info(file_name: str, message: str) -> None:
     asyncio.run(MongoLog(mongo_collection).log_info(file_name, message))
+
+def log_error(file_name:str, message: str) -> None:
+    asyncio.run(MongoLog(mongo_collection).log_error(file_name, message))

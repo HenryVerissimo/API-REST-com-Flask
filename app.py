@@ -3,7 +3,7 @@ from flask import request, jsonify
 
 
 from app.controllers.user_controller import UserController
-from app.models.mongodb import log_info
+from app.models.mongodb import log_info, log_error
 
 
 @app.route("/users", methods=["POST"])
@@ -16,6 +16,7 @@ def create_user():
     if response["status"] == "success":
         return jsonify(response), 201
     
+    log_error(__name__, "Erro ao tentar inserir novo usuário")
     return jsonify(response), 400
 
 @app.route("/users", methods=["GET"])
@@ -27,6 +28,7 @@ def select_users():
     if response["status"] == "success":
         return jsonify(response), 200
     
+    log_error(__name__, "Erro ao tentar visualizar dados")
     return jsonify(response), 400
 
 @app.route("/users/<int:id>", methods=["PUT"])
@@ -39,6 +41,7 @@ def update_user(id: int):
     if response["status"] == "success":
         return jsonify(response), 200
     
+    log_error(__name__, "Erro ao tentar atualizar usuário")
     return jsonify(response), 400
 
 @app.route("/users/<int:id>", methods=["DELETE"])
@@ -50,6 +53,7 @@ def delete_user(id: int):
     if response["status"] == "success":
         return jsonify(response), 200
     
+    log_error(__name__, "Erro ao tentar deletar usuário")
     return jsonify(response), 400
 
 @app.route("/users/<int:id>", methods=["GET"])
@@ -61,6 +65,7 @@ def select_user(id):
     if response["status"] == "success":
         return jsonify(response), 200
     
+    log_error(__name__, "Erro ao tentar visualizar informações do usuário")
     return jsonify(response), 400
 
 if __name__ == "__main__":
